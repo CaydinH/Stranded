@@ -1,0 +1,66 @@
+[gd_scene load_steps=10 format=3 uid="uid://c6t86yris71wx"]
+
+[ext_resource type="Script" path="res://player.gd" id="1_mbjvi"]
+[ext_resource type="Texture2D" uid="uid://idfnkwfcfbf1" path="res://character.png" id="2_jkxwv"]
+[ext_resource type="PackedScene" uid="uid://2ae8qrjfunf" path="res://laser_gun.tscn" id="3_3vk3d"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_0x18i"]
+radius = 6.0
+height = 20.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8ajo1"]
+atlas = ExtResource("2_jkxwv")
+region = Rect2(0, 32, 16, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_job6w"]
+atlas = ExtResource("2_jkxwv")
+region = Rect2(16, 32, 16, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_t6xu5"]
+atlas = ExtResource("2_jkxwv")
+region = Rect2(32, 32, 16, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ddmba"]
+atlas = ExtResource("2_jkxwv")
+region = Rect2(48, 32, 16, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_rh6nv"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8ajo1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_job6w")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_t6xu5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ddmba")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="player" type="CharacterBody2D"]
+script = ExtResource("1_mbjvi")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_0x18i")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(5, 5)
+
+[node name="RayCastLeft" type="RayCast2D" parent="."]
+target_position = Vector2(-9, 0)
+
+[node name="RayCastRight" type="RayCast2D" parent="."]
+target_position = Vector2(9, 0)
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_rh6nv")
+
+[node name="laser_gun" parent="." instance=ExtResource("3_3vk3d")]
+position = Vector2(3, 4)

@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://2ae8qrjfunf"]
+
+[ext_resource type="Script" path="res://laser_body.gd" id="1_4iusf"]
+[ext_resource type="Texture2D" uid="uid://d1wct25eapx7k" path="res://Lasergewehr.png" id="2_g82f5"]
+
+[node name="laser_gun" type="Node2D"]
+
+[node name="laser_body" type="Node2D" parent="."]
+script = ExtResource("1_4iusf")
+
+[node name="Sprite2D" type="Sprite2D" parent="laser_body"]
+scale = Vector2(0.04375, 0.04375)
+texture = ExtResource("2_g82f5")
+
+[node name="Timer" type="Timer" parent="laser_body"]
