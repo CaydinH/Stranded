@@ -4,6 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://d1wct25eapx7k" path="res://Lasergewehr.png" id="2_g82f5"]
 
 [node name="laser_gun" type="Node2D"]
+rotation = -1.5708
 
 [node name="laser_body" type="Node2D" parent="."]
 script = ExtResource("1_4iusf")
@@ -13,3 +14,10 @@ scale = Vector2(0.04375, 0.04375)
 texture = ExtResource("2_g82f5")
 
 [node name="Timer" type="Timer" parent="laser_body"]
+autostart = true
+
+[node name="Camera2D" type="Camera2D" parent="laser_body"]
+visible = false
+zoom = Vector2(5, 5)
+
+[connection signal="timeout" from="laser_body/Timer" to="laser_body" method="_on_timer_timeout"]
