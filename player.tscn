@@ -1,9 +1,10 @@
-[gd_scene load_steps=11 format=3 uid="uid://c6t86yris71wx"]
+[gd_scene load_steps=12 format=3 uid="uid://c6t86yris71wx"]
 
 [ext_resource type="Script" path="res://player.gd" id="1_mbjvi"]
 [ext_resource type="Texture2D" uid="uid://idfnkwfcfbf1" path="res://character.png" id="2_jkxwv"]
 [ext_resource type="PackedScene" uid="uid://2ae8qrjfunf" path="res://laser_gun.tscn" id="3_3vk3d"]
 [ext_resource type="PackedScene" uid="uid://cm7rqenaodh4p" path="res://player_hud.tscn" id="4_wwf7a"]
+[ext_resource type="PackedScene" uid="uid://6ip0spihxlif" path="res://menu.tscn" id="5_0m0jt"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_0x18i"]
 radius = 6.0
@@ -67,3 +68,5 @@ sprite_frames = SubResource("SpriteFrames_rh6nv")
 position = Vector2(3, 4)
 
 [node name="player_HUD" parent="." instance=ExtResource("4_wwf7a")]
+
+[node name="menu" parent="." instance=ExtResource("5_0m0jt")]

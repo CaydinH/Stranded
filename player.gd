@@ -50,6 +50,14 @@ func _physics_process(delta: float) -> void:
 	$player_HUD/Label.text = str(stats.health)
 	
 	
+	if Input.is_action_just_pressed("esc"):
+		if not $menu.visible:
+			$menu.visible = true
+		else:
+			$menu.visible = false
+
+	
+	
 	move_and_slide()
 	
 
