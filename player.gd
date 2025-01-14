@@ -53,8 +53,10 @@ func _physics_process(delta: float) -> void:
 	if Input.is_action_just_pressed("esc"):
 		if not $menu.visible:
 			$menu.visible = true
+			get_tree().paused = true
 		else:
 			$menu.visible = false
+			get_tree().paused = false
 
 	
 	

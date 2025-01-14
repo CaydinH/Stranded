@@ -19,7 +19,6 @@ func _on_timer_timeout() -> void:
 
 
 func _on_area_2d_body_entered(body: Node2D) -> void:
-	for enemy in get_tree().get_nodes_in_group("enemy"):
-		if body.is_in_group("enemy"):
-			enemy.take_damage(10)
+	if body.is_in_group("enemy"):
+		body.take_damage(10)
 	self.queue_free()
