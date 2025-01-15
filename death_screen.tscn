@@ -1,0 +1,77 @@
+[gd_scene load_steps=6 format=3 uid="uid://bd6jk804rpysu"]
+
+[ext_resource type="Texture2D" uid="uid://budalwhycqc1r" path="res://assets/Button.png" id="1_lwgw8"]
+
+[sub_resource type="Theme" id="Theme_kn8wi"]
+default_font_size = 50
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_cusdf"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_0vemp"]
+
+[sub_resource type="Theme" id="Theme_fp7vx"]
+default_font_size = 50
+
+[node name="deathScreen" type="CanvasLayer"]
+process_mode = 3
+
+[node name="ColorRect" type="ColorRect" parent="."]
+z_index = -4
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.733333, 0, 0.278431, 0.282353)
+
+[node name="BtnExit" type="Button" parent="."]
+anchors_preset = -1
+anchor_left = 0.322
+anchor_top = 0.721
+anchor_right = 0.678
+anchor_bottom = 0.906
+offset_left = -0.444031
+offset_top = -0.208008
+offset_right = 0.44397
+offset_bottom = -0.0880127
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_kn8wi")
+theme_override_styles/hover = SubResource("StyleBoxTexture_cusdf")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_0vemp")
+text = "Exit to menu"
+
+[node name="Sprite2D" type="Sprite2D" parent="BtnExit"]
+z_index = -1
+position = Vector2(206.125, 59.625)
+scale = Vector2(10.5321, 10.7955)
+texture = ExtResource("1_lwgw8")
+
+[node name="BtRestart" type="Button" parent="."]
+anchors_preset = -1
+anchor_left = 0.322
+anchor_top = 0.461
+anchor_right = 0.678
+anchor_bottom = 0.647
+offset_left = -0.444031
+offset_top = 0.271973
+offset_right = 0.44397
+offset_bottom = -0.256012
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_kn8wi")
+text = "Restart"
+
+[node name="Label" type="Label" parent="."]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -178.5
+offset_right = 178.5
+offset_bottom = 214.0
+grow_horizontal = 2
+theme = SubResource("Theme_fp7vx")
+text = "You
+ Died!"
+horizontal_alignment = 1
+vertical_alignment = 1
