@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dijrlc8lht3ot"
-path="res://.godot/imported/slope_sheet.png-025169d3112ebc611e179d7840c22382.ctex"
+uid="uid://cc44f7l1q4am"
+path="res://.godot/imported/player_arm_gun.png-604cc95a60d62c77bb5db6efbffc40d6.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://slope_sheet.png"
-dest_files=["res://.godot/imported/slope_sheet.png-025169d3112ebc611e179d7840c22382.ctex"]
+source_file="res://assets/player_arm_gun.png"
+dest_files=["res://.godot/imported/player_arm_gun.png-604cc95a60d62c77bb5db6efbffc40d6.ctex"]
 
 [params]
 

@@ -1,8 +1,9 @@
 extends CharacterBody2D
 
 const SPEED = 150.0
-const JUMP_VELOCITY = -400.0
+const JUMP_VELOCITY = -250.0
 var dmg_lock = 0.5
+var jump_lock = 0.0
 
 @export var stats = {
 	"health": 140,
@@ -11,30 +12,30 @@ var dmg_lock = 0.5
 	"atk_dmg": 20,
 }
 
+func _ready() -> void:
+	$laser_gun.visible = false
+
 func _physics_process(delta: float) -> void:
 	dmg_lock = max(dmg_lock-delta, 0.0)
-	# Add the gravity.
+	jump_lock = max(jump_lock-delta, 0.0)
+	print(jump_lock)
+	
 	if $RayCastRight.is_colliding() or $RayCastLeft.is_colliding():
-		velocity.y = 0.5
 		stats.jumps = 2
+		if Input.is_action_just_pressed("jump"):
+			jump_lock = 0.25
+		if jump_lock == 0:
+			velocity.y = 0.5
+		
 	if not is_on_floor():
 		velocity += get_gravity() * delta
-		$RayCastRight.enabled = true
-		$RayCastLeft.enabled = true
 	
 	if is_on_floor():
 		stats.jumps = 2
-
-	# Handle jump.
-	if Input.is_action_just_pressed("ui_accept") and is_on_floor():
-		velocity.y = JUMP_VELOCITY
 	
 	if Input.is_action_just_pressed("jump") and stats.jumps >= 1:
 		velocity.y = JUMP_VELOCITY
 		stats.jumps -= 1
-		$RayCastRight.enabled = false
-		$RayCastLeft.enabled = false
-
 	# Get the input direction and handle the movement/deceleration.
 	# As good practice, you should replace UI actions with custom gameplay actions.
 	var direction := Input.get_axis("walk_left", "walk_right")
@@ -57,7 +58,6 @@ func _physics_process(delta: float) -> void:
 		else:
 			$menu.visible = false
 			get_tree().paused = false
-	$player_arm.look_at(get_global_mouse_position())
 
 	
 	
