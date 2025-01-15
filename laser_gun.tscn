@@ -7,17 +7,14 @@
 rotation = -1.5708
 
 [node name="laser_body" type="Node2D" parent="."]
+rotation = 1.5708
 script = ExtResource("1_4iusf")
 
 [node name="Sprite2D" type="Sprite2D" parent="laser_body"]
 scale = Vector2(0.04375, 0.04375)
 texture = ExtResource("2_g82f5")
-
-[node name="Timer" type="Timer" parent="laser_body"]
-autostart = true
+offset = Vector2(85, -15)
 
 [node name="Camera2D" type="Camera2D" parent="laser_body"]
 visible = false
 zoom = Vector2(5, 5)
-
-[connection signal="timeout" from="laser_body/Timer" to="laser_body" method="_on_timer_timeout"]

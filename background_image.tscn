@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://du3tvdppv75k0"]
+
+[ext_resource type="Texture2D" uid="uid://cuxvsst8tcc5t" path="res://desert_moons.png" id="1_xte50"]
+
+[node name="backgroundImage" type="CanvasLayer"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+z_index = -4
+position = Vector2(576.889, 324.25)
+scale = Vector2(0.600463, 0.600463)
+texture = ExtResource("1_xte50")

@@ -57,6 +57,7 @@ func _physics_process(delta: float) -> void:
 		else:
 			$menu.visible = false
 			get_tree().paused = false
+	$player_arm.look_at(get_global_mouse_position())
 
 	
 	

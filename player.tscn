@@ -1,48 +1,83 @@
-[gd_scene load_steps=12 format=3 uid="uid://c6t86yris71wx"]
+[gd_scene load_steps=18 format=3 uid="uid://c6t86yris71wx"]
 
 [ext_resource type="Script" path="res://player.gd" id="1_mbjvi"]
-[ext_resource type="Texture2D" uid="uid://idfnkwfcfbf1" path="res://character.png" id="2_jkxwv"]
+[ext_resource type="Texture2D" uid="uid://bpnyo5pgkor1t" path="res://Player_Idle.png" id="2_peq4d"]
 [ext_resource type="PackedScene" uid="uid://2ae8qrjfunf" path="res://laser_gun.tscn" id="3_3vk3d"]
+[ext_resource type="Texture2D" uid="uid://c26eppmvwoaqw" path="res://Player_walk.png" id="3_4g86m"]
 [ext_resource type="PackedScene" uid="uid://cm7rqenaodh4p" path="res://player_hud.tscn" id="4_wwf7a"]
 [ext_resource type="PackedScene" uid="uid://6ip0spihxlif" path="res://menu.tscn" id="5_0m0jt"]
+[ext_resource type="Texture2D" uid="uid://cc44f7l1q4am" path="res://player_arm_gun.png" id="7_4gb0o"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_0x18i"]
-radius = 6.0
-height = 20.0
+radius = 7.0
+height = 26.0
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_8ajo1"]
-atlas = ExtResource("2_jkxwv")
-region = Rect2(0, 32, 16, 32)
+[sub_resource type="AtlasTexture" id="AtlasTexture_jguf6"]
+atlas = ExtResource("2_peq4d")
+region = Rect2(0, 0, 32, 32)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_job6w"]
-atlas = ExtResource("2_jkxwv")
-region = Rect2(16, 32, 16, 32)
+[sub_resource type="AtlasTexture" id="AtlasTexture_lj8ka"]
+atlas = ExtResource("2_peq4d")
+region = Rect2(0, 32, 32, 32)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_t6xu5"]
-atlas = ExtResource("2_jkxwv")
-region = Rect2(32, 32, 16, 32)
+[sub_resource type="AtlasTexture" id="AtlasTexture_cvnf8"]
+atlas = ExtResource("3_4g86m")
+region = Rect2(0, 0, 32, 32)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_ddmba"]
-atlas = ExtResource("2_jkxwv")
-region = Rect2(48, 32, 16, 32)
+[sub_resource type="AtlasTexture" id="AtlasTexture_ewg3t"]
+atlas = ExtResource("3_4g86m")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_k4017"]
+atlas = ExtResource("3_4g86m")
+region = Rect2(0, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gvg0g"]
+atlas = ExtResource("3_4g86m")
+region = Rect2(32, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xts72"]
+atlas = ExtResource("3_4g86m")
+region = Rect2(0, 64, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_78tua"]
+atlas = ExtResource("3_4g86m")
+region = Rect2(32, 64, 32, 32)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_rh6nv"]
 animations = [{
 "frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_8ajo1")
+"duration": 20.0,
+"texture": SubResource("AtlasTexture_jguf6")
 }, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_job6w")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_t6xu5")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_ddmba")
+"duration": 0.25,
+"texture": SubResource("AtlasTexture_lj8ka")
 }],
 "loop": true,
 "name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cvnf8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ewg3t")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_k4017")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gvg0g")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xts72")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_78tua")
+}],
+"loop": true,
+"name": &"walk_right",
 "speed": 5.0
 }]
 
@@ -62,11 +97,18 @@ target_position = Vector2(-9, 0)
 target_position = Vector2(9, 0)
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(-1, -3)
 sprite_frames = SubResource("SpriteFrames_rh6nv")
-
-[node name="laser_gun" parent="." instance=ExtResource("3_3vk3d")]
-position = Vector2(3, 4)
+animation = &"walk_right"
 
 [node name="player_HUD" parent="." instance=ExtResource("4_wwf7a")]
 
 [node name="menu" parent="." instance=ExtResource("5_0m0jt")]
+
+[node name="player_arm" type="Sprite2D" parent="."]
+position = Vector2(-1, -4)
+texture = ExtResource("7_4gb0o")
+offset = Vector2(2.5, 1)
+
+[node name="laser_gun" parent="player_arm" instance=ExtResource("3_3vk3d")]
+position = Vector2(5, 1)

@@ -1,13 +1,14 @@
 extends Node2D
 @onready var projectile = load("res://projectile.tscn")
+@onready var arm = get_tree().get_root().get_node("player_arm")
 var cooldown = 0.0
 
 func _physics_process(delta: float) -> void:
 	cooldown = max(cooldown - delta, 0.0)
-	look_at(get_global_mouse_position())
 	if cooldown == 0.0:
 		if Input.is_action_just_pressed("left_click"):
 			shoot()
+	#self.rotation = arm
 
 func shoot():
 	var instance = projectile.instantiate()
