@@ -1,10 +1,10 @@
 [gd_scene load_steps=13 format=4 uid="uid://bxv52aws3bixl"]
 
-[ext_resource type="Texture2D" uid="uid://cedgkt0g8fb4e" path="res://assets/sheet.png" id="1_at03s"]
-[ext_resource type="Texture2D" uid="uid://dijrlc8lht3ot" path="res://assets/slope_sheet.png" id="2_ljgdg"]
+[ext_resource type="Texture2D" uid="uid://cedgkt0g8fb4e" path="res://sheet.png" id="1_at03s"]
+[ext_resource type="Texture2D" uid="uid://dijrlc8lht3ot" path="res://slope_sheet.png" id="2_ljgdg"]
 [ext_resource type="PackedScene" uid="uid://c6t86yris71wx" path="res://player.tscn" id="3_hifih"]
 [ext_resource type="PackedScene" uid="uid://bwynn13ypxcba" path="res://death_box.tscn" id="4_t2aiq"]
-[ext_resource type="Texture2D" uid="uid://cuxvsst8tcc5t" path="res://assets/desert_moons.png" id="5_fh7is"]
+[ext_resource type="Texture2D" uid="uid://cuxvsst8tcc5t" path="res://desert_moons.png" id="5_fh7is"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_sejwm"]
 texture = ExtResource("1_at03s")

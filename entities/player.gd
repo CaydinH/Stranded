@@ -5,6 +5,13 @@ const JUMP_VELOCITY = -250.0
 var dmg_lock = 0.5
 var jump_lock = 0.0
 
+enum States {IDLE, WALKING, JUMPING, FALLING, ATTACKING, SLIDING, RUNNING}
+var state = States.IDLE
+
+func change_state(newState):
+	state = newState
+	
+
 @export var stats = {
 	"health": 140,
 	"max_health": 140,
@@ -22,10 +29,13 @@ func _physics_process(delta: float) -> void:
 	
 	if $RayCastRight.is_colliding() or $RayCastLeft.is_colliding():
 		stats.jumps = 2
+		$AnimatedSprite2D.play("wall_slide")
 		if Input.is_action_just_pressed("jump"):
 			jump_lock = 0.25
 		if jump_lock == 0:
 			velocity.y = 0.5
+		if $RayCastLeft.is_colliding():
+			$AnimatedSprite2D.flip_h
 		
 	if not is_on_floor():
 		velocity += get_gravity() * delta
@@ -36,15 +46,19 @@ func _physics_process(delta: float) -> void:
 	if Input.is_action_just_pressed("jump") and stats.jumps >= 1:
 		velocity.y = JUMP_VELOCITY
 		stats.jumps -= 1
-	# Get the input direction and handle the movement/deceleration.
-	# As good practice, you should replace UI actions with custom gameplay actions.
+
+
 	var direction := Input.get_axis("walk_left", "walk_right")
 	if Input.is_action_pressed("shift"):
 		velocity.x = direction*SPEED*1.7
 	elif direction:
 		velocity.x = direction * SPEED
+		$AnimatedSprite2D.play("walk_right")
+		$AnimatedSprite2D.flip_h = direction < 0
 	else:
 		velocity.x = move_toward(velocity.x, 0, SPEED)
+		$AnimatedSprite2D.play("idle")
+
 	
 	$player_HUD/ProgressBar.max_value = stats.max_health
 	$player_HUD/ProgressBar.value = stats.health
