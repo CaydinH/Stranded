@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://dy5chakfijrva"]
 
 [ext_resource type="Script" path="res://entities/bush_walker.gd" id="1_yhpq1"]
-[ext_resource type="Texture2D" uid="uid://swu4sc6jdoxt" path="res://assets/icon.svg" id="2_hby0x"]
+[ext_resource type="Texture2D" uid="uid://swu4sc6jdoxt" path="res://icon.svg" id="2_hby0x"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_yyxjs"]
 size = Vector2(12, 12)

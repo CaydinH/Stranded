@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://cvn81qj7gk2x6"]
 
 [ext_resource type="Script" path="res://entities/player_isometric.gd" id="1_uk46l"]
-[ext_resource type="Texture2D" uid="uid://swu4sc6jdoxt" path="res://assets/icon.svg" id="2_had8l"]
+[ext_resource type="Texture2D" uid="uid://swu4sc6jdoxt" path="res://icon.svg" id="2_had8l"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_rgmsq"]
 radius = 30.4138
