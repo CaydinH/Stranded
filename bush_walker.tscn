@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://swu4sc6jdoxt" path="res://assets/icon.svg" id="2_hby0x"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_yyxjs"]
-size = Vector2(12, 12)
+size = Vector2(18, 12)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wjjpn"]
 size = Vector2(14, 14)
@@ -34,6 +34,11 @@ autostart = true
 
 [node name="RayCast2D" type="RayCast2D" parent="."]
 position = Vector2(-6, 6)
+scale = Vector2(0.5, 0.5)
+target_position = Vector2(0, 34)
+
+[node name="RayCast2D2" type="RayCast2D" parent="."]
+position = Vector2(6, 6)
 scale = Vector2(0.5, 0.5)
 target_position = Vector2(0, 34)
 

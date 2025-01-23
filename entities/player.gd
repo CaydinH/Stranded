@@ -1,4 +1,5 @@
 extends CharacterBody2D
+@onready var laser = load("res://laser_gun.tscn")
 
 #Global Variables
 const SPEED = 150.0
@@ -14,11 +15,8 @@ var jump_lock : float
 }
 
 #State Machine
-enum States {IDLE, WALKING, JUMPING, FALLING, ATTACKING, SLIDING, DEAD, PAUSED}
+enum States {IDLE, WALKING, JUMPING, FALLING, ATTACKING, SLIDING, DEAD}
 var state = States.IDLE
-
-func _ready() -> void:
-	$laser_gun.visible = false
 
 func _physics_process(delta: float) -> void:
 	dmg_lock = max(dmg_lock-delta, 0.0)
@@ -27,26 +25,40 @@ func _physics_process(delta: float) -> void:
 	$player_HUD/ProgressBar.value = stats.health
 	$player_HUD/Label.text = str(stats.health)
 
-	if state != States.DEAD and state != States.PAUSED:
-		var direction := Input.get_axis("walk_left", "walk_right")
-		if direction:
-			state = States.WALKING
-			velocity.x = direction * SPEED
-			$AnimatedSprite2D.flip_h = direction < 0
-		else:
-			state = States.IDLE
-			velocity.x = move_toward(velocity.x, 0, SPEED)
+
+	if state != States.DEAD:
+		if $RayCastRight.is_colliding() or $RayCastLeft.is_colliding():
+			stats.jumps = 2
+			$AnimatedSprite2D.play("walk_right")
+			if Input.is_action_just_pressed("jump"):
+				jump_lock = 0.25
+				state = States.JUMPING
+			if jump_lock == 0:
+				velocity.y = 0.5
+				$AnimatedSprite2D.flip_h = $RayCastLeft.is_colliding()
 
 		if not is_on_floor():
-			state = States.JUMPING
+			state = States.FALLING
 			velocity += get_gravity() * delta
 		else:
 			stats.jumps = 2
 
 		if Input.is_action_just_pressed("jump") and stats.jumps >= 1:
-			state = States.JUMPING
 			velocity.y = JUMP_VELOCITY
 			stats.jumps -= 1
+			$AnimatedSprite2D.play("jump")
+
+		var direction := Input.get_axis("walk_left", "walk_right")
+		if Input.is_action_pressed("shift"):
+			velocity.x = direction*SPEED*1.7
+		elif direction:
+			velocity.x = direction * SPEED
+			$AnimatedSprite2D.play("walk_right")
+			$AnimatedSprite2D.flip_h = direction < 0
+		else:
+			velocity.x = move_toward(velocity.x, 0, SPEED)
+			$AnimatedSprite2D.play("idle")
+			
 
 		if Input.is_action_just_pressed("esc"):
 			if not $menu.visible:
@@ -55,23 +67,8 @@ func _physics_process(delta: float) -> void:
 			else:
 				$menu.visible = false
 				get_tree().paused = false
+		print(state)
 		move_and_slide()
-	match state:
-		States.DEAD:
-			OS.alert("Dead")
-			get_tree().reload_current_scene()
-		States.WALKING:
-			await $AnimatedSprite2D.animation_finished
-			$AnimatedSprite2D.play("walk_right")
-		States.JUMPING:
-			await $AnimatedSprite2D.animation_finished
-			$AnimatedSprite2D.play("jump")
-		States.FALLING:
-			await $AnimatedSprite2D.animation_finished
-			$AnimatedSprite2D.play("jump")
-		_:
-			await $AnimatedSprite2D.animation_finished
-			$AnimatedSprite2D.play("idle")
 
 
 func pickup_health(value):
@@ -82,3 +79,5 @@ func take_damage(dmg):
 	stats.health -= dmg
 	if stats.health <= 0:
 		state = States.DEAD
+		OS.alert("Dead")
+		get_tree().reload_current_scene()

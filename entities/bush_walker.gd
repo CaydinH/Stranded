@@ -1,7 +1,7 @@
 extends CharacterBody2D
 
 
-const SPEED = 50.0
+const SPEED = 80.0
 var health = 20
 
 func _ready() -> void:
@@ -13,7 +13,7 @@ func _physics_process(delta: float) -> void:
 	if not is_on_floor():
 		velocity += get_gravity() * delta
 
-	if not $RayCast2D.is_colliding():
+	if not $RayCast2D.is_colliding() or not $RayCast2D2.is_colliding():
 		velocity.x *= -1
 		$Timer.stop()
 		$Timer.start()

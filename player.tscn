@@ -1,9 +1,9 @@
 [gd_scene load_steps=24 format=3 uid="uid://c6t86yris71wx"]
 
 [ext_resource type="Script" path="res://entities/player.gd" id="1_mbjvi"]
-[ext_resource type="Texture2D" uid="uid://bs1k7y4n2ll83" path="res://player_idle.png" id="2_gn3cc"]
+[ext_resource type="Texture2D" uid="uid://bs1k7y4n2ll83" path="res://assets/player_idle.png" id="2_gn3cc"]
 [ext_resource type="PackedScene" uid="uid://2ae8qrjfunf" path="res://laser_gun.tscn" id="3_3vk3d"]
-[ext_resource type="Texture2D" uid="uid://c26eppmvwoaqw" path="res://Player_walk.png" id="3_4g86m"]
+[ext_resource type="Texture2D" uid="uid://c26eppmvwoaqw" path="res://assets/Player_walk.png" id="3_4g86m"]
 [ext_resource type="Texture2D" uid="uid://83van2g2yqo0" path="res://Player_jump.png" id="3_ji4mi"]
 [ext_resource type="PackedScene" uid="uid://cm7rqenaodh4p" path="res://player_hud.tscn" id="4_wwf7a"]
 [ext_resource type="PackedScene" uid="uid://6ip0spihxlif" path="res://menu.tscn" id="5_0m0jt"]
@@ -152,7 +152,7 @@ target_position = Vector2(9, 0)
 collision_mask = 2
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-position = Vector2(0, 1)
+position = Vector2(-1, 0)
 sprite_frames = SubResource("SpriteFrames_rh6nv")
 animation = &"jump"
 autoplay = "idle"
