@@ -1,11 +1,97 @@
-[gd_scene load_steps=17 format=3 uid="uid://c6t86yris71wx"]
+[gd_scene load_steps=24 format=3 uid="uid://c6t86yris71wx"]
 
-[ext_resource type="Script" path="res://entities/player.gd" id="1_mbjvi"]
-[ext_resource type="Texture2D" uid="uid://bs1k7y4n2ll83" path="res://player_idle.png" id="2_gn3cc"]
-[ext_resource type="PackedScene" uid="uid://2ae8qrjfunf" path="res://laser_gun.tscn" id="3_3vk3d"]
-[ext_resource type="Texture2D" uid="uid://c26eppmvwoaqw" path="res://Player_walk.png" id="3_4g86m"]
-[ext_resource type="PackedScene" uid="uid://cm7rqenaodh4p" path="res://player_hud.tscn" id="4_wwf7a"]
-[ext_resource type="PackedScene" uid="uid://6ip0spihxlif" path="res://menu.tscn" id="5_0m0jt"]
+[ext_resource type="Texture2D" uid="uid://bs1k7y4n2ll83" path="res://assets/player_idle.png" id="2_gn3cc"]
+[ext_resource type="PackedScene" uid="uid://2ae8qrjfunf" path="res://menus-or-objects/laser_gun.tscn" id="3_3vk3d"]
+[ext_resource type="Texture2D" uid="uid://c26eppmvwoaqw" path="res://assets/Player_walk.png" id="3_4g86m"]
+[ext_resource type="Texture2D" uid="uid://83van2g2yqo0" path="res://assets/Player_jump.png" id="3_ji4mi"]
+[ext_resource type="PackedScene" uid="uid://cm7rqenaodh4p" path="res://menus-or-objects/player_hud.tscn" id="4_wwf7a"]
+[ext_resource type="PackedScene" uid="uid://6ip0spihxlif" path="res://menus-or-objects/menu.tscn" id="5_0m0jt"]
+[ext_resource type="PackedScene" uid="uid://bd6jk804rpysu" path="res://menus-or-objects/death_screen.tscn" id="7_10pk7"]
+
+[sub_resource type="GDScript" id="GDScript_x6s0w"]
+script/source = "extends CharacterBody2D
+@onready var laser = load(\"res://menus-or-objects/laser_gun.tscn\")
+
+#Global Variables
+const SPEED = 150.0
+const JUMP_VELOCITY = -250.0
+var dmg_lock : float
+var jump_lock : float
+
+@export var stats = {
+	\"health\": 140,
+	\"max_health\": 140,
+	\"jumps\": 2,
+	\"atk_dmg\": 20,
+}
+
+#State Machine
+enum States {IDLE, WALKING, JUMPING, FALLING, ATTACKING, SLIDING, DEAD}
+var state = States.IDLE
+
+func _physics_process(delta: float) -> void:
+	dmg_lock = max(dmg_lock-delta, 0.0)
+	jump_lock = max(jump_lock-delta, 0.0)
+	$player_HUD/ProgressBar.max_value = stats.max_health
+	$player_HUD/ProgressBar.value = stats.health
+	$player_HUD/Label.text = str(stats.health)
+
+
+	if state != States.DEAD:
+		if $RayCastRight.is_colliding() or $RayCastLeft.is_colliding():
+			stats.jumps = 2
+			$AnimatedSprite2D.play(\"walk_right\")
+			if Input.is_action_just_pressed(\"jump\"):
+				jump_lock = 0.25
+				state = States.JUMPING
+			if jump_lock == 0:
+				velocity.y = 0.5
+				$AnimatedSprite2D.flip_h = $RayCastLeft.is_colliding()
+
+		if not is_on_floor():
+			state = States.FALLING
+			velocity += get_gravity() * delta
+		else:
+			stats.jumps = 2
+
+		if Input.is_action_just_pressed(\"jump\") and stats.jumps >= 1:
+			velocity.y = JUMP_VELOCITY
+			stats.jumps -= 1
+			$AnimatedSprite2D.play(\"jump\")
+
+		var direction := Input.get_axis(\"walk_left\", \"walk_right\")
+		if Input.is_action_pressed(\"shift\"):
+			velocity.x = direction*SPEED*1.7
+		elif direction:
+			velocity.x = direction * SPEED
+			$AnimatedSprite2D.play(\"walk_right\")
+			$AnimatedSprite2D.flip_h = direction < 0
+		else:
+			velocity.x = move_toward(velocity.x, 0, SPEED)
+			$AnimatedSprite2D.play(\"idle\")
+			
+
+		if Input.is_action_just_pressed(\"esc\"):
+			if not $menu.visible:
+				$menu.visible = true
+				get_tree().paused = true
+			else:
+				$menu.visible = false
+				get_tree().paused = false
+		move_and_slide()
+
+
+func pickup_health(value):
+	stats.health += value
+	stats.health = clamp(stats.health, 0, stats.max_health)
+
+func take_damage(dmg):
+	stats.health -= dmg
+	if stats.health <= 0:
+		state = States.DEAD
+		OS.alert(\"Dead\")
+		get_tree().reload_current_scene()
+"
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_0x18i"]
 radius = 5.0
@@ -18,6 +104,22 @@ region = Rect2(0, 0, 32, 32)
 [sub_resource type="AtlasTexture" id="AtlasTexture_s7svd"]
 atlas = ExtResource("2_gn3cc")
 region = Rect2(0, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j3bc5"]
+atlas = ExtResource("3_ji4mi")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kyiyd"]
+atlas = ExtResource("3_ji4mi")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ynfpr"]
+atlas = ExtResource("3_ji4mi")
+region = Rect2(0, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_shqp6"]
+atlas = ExtResource("3_ji4mi")
+region = Rect2(32, 32, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_cvnf8"]
 atlas = ExtResource("3_4g86m")
@@ -43,8 +145,17 @@ region = Rect2(0, 64, 32, 32)
 atlas = ExtResource("3_4g86m")
 region = Rect2(32, 64, 32, 32)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_hxu55"]
+atlas = ExtResource("3_4g86m")
+region = Rect2(0, 0, 32, 32)
+
 [sub_resource type="SpriteFrames" id="SpriteFrames_rh6nv"]
 animations = [{
+"frames": [],
+"loop": true,
+"name": &"double_jump",
+"speed": 5.0
+}, {
 "frames": [{
 "duration": 20.0,
 "texture": SubResource("AtlasTexture_mm0hy")
@@ -56,9 +167,21 @@ animations = [{
 "name": &"idle",
 "speed": 5.0
 }, {
-"frames": [],
+"frames": [{
+"duration": 0.5,
+"texture": SubResource("AtlasTexture_j3bc5")
+}, {
+"duration": 0.5,
+"texture": SubResource("AtlasTexture_kyiyd")
+}, {
+"duration": 0.5,
+"texture": SubResource("AtlasTexture_ynfpr")
+}, {
+"duration": 0.5,
+"texture": SubResource("AtlasTexture_shqp6")
+}],
 "loop": true,
-"name": &"walk_left",
+"name": &"jump",
 "speed": 5.0
 }, {
 "frames": [{
@@ -83,10 +206,18 @@ animations = [{
 "loop": true,
 "name": &"walk_right",
 "speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hxu55")
+}],
+"loop": true,
+"name": &"wall_slide",
+"speed": 5.0
 }]
 
 [node name="player" type="CharacterBody2D" groups=["player"]]
-script = ExtResource("1_mbjvi")
+script = SubResource("GDScript_x6s0w")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CapsuleShape2D_0x18i")
@@ -98,15 +229,18 @@ position_smoothing_speed = 10.0
 
 [node name="RayCastLeft" type="RayCast2D" parent="."]
 target_position = Vector2(-9, 0)
+collision_mask = 2
 
 [node name="RayCastRight" type="RayCast2D" parent="."]
 target_position = Vector2(9, 0)
+collision_mask = 2
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-position = Vector2(0, 1)
+position = Vector2(-1, 0)
 sprite_frames = SubResource("SpriteFrames_rh6nv")
-animation = &"idle"
+animation = &"jump"
 autoplay = "idle"
+frame_progress = 0.0306334
 
 [node name="player_HUD" parent="." instance=ExtResource("4_wwf7a")]
 
@@ -114,3 +248,6 @@ autoplay = "idle"
 
 [node name="laser_gun" parent="." instance=ExtResource("3_3vk3d")]
 position = Vector2(0, 1)
+
+[node name="deathScreen" parent="." instance=ExtResource("7_10pk7")]
+visible = false

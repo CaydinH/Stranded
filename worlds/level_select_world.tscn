@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=4 uid="uid://c13nhqjumbu5t"]
 
-[ext_resource type="Texture2D" uid="uid://cu7oeqfxpv01x" path="res://iso_tileset.png" id="1_uqo6m"]
-[ext_resource type="PackedScene" uid="uid://cvn81qj7gk2x6" path="res://player_isometric.tscn" id="2_isrpy"]
+[ext_resource type="Texture2D" uid="uid://cu7oeqfxpv01x" path="res://assets/iso_tileset.png" id="1_uqo6m"]
+[ext_resource type="PackedScene" uid="uid://cvn81qj7gk2x6" path="res://entities/player_isometric.tscn" id="2_isrpy"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_2jla2"]
 texture = ExtResource("1_uqo6m")
@@ -46,3 +46,4 @@ y_sort_enabled = true
 
 [node name="player_isometric" parent="." instance=ExtResource("2_isrpy")]
 position = Vector2(19, -3)
+script = null

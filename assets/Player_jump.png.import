@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cuxvsst8tcc5t"
-path="res://.godot/imported/desert_moons.png-eea5dcecc5e253fa061c009e1bdd2e39.ctex"
+uid="uid://83van2g2yqo0"
+path="res://.godot/imported/Player_jump.png-9402334db005d96fa20cdff5ade8a8bb.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://desert_moons.png"
-dest_files=["res://.godot/imported/desert_moons.png-eea5dcecc5e253fa061c009e1bdd2e39.ctex"]
+source_file="res://assets/Player_jump.png"
+dest_files=["res://.godot/imported/Player_jump.png-9402334db005d96fa20cdff5ade8a8bb.ctex"]
 
 [params]
 

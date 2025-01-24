@@ -1,14 +1,10 @@
-[gd_scene load_steps=3 format=3 uid="uid://6ip0spihxlif"]
-
-[ext_resource type="Script" path="res://menus-or-objects/menu.gd" id="1_lbsbh"]
+[gd_scene load_steps=2 format=3 uid="uid://6ip0spihxlif"]
 
 [sub_resource type="Theme" id="Theme_bj8f6"]
 default_font_size = 60
 
 [node name="menu" type="CanvasLayer"]
 process_mode = 3
-visible = false
-script = ExtResource("1_lbsbh")
 
 [node name="BtnExit" type="Button" parent="."]
 anchors_preset = -1

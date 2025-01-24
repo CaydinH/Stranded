@@ -12,7 +12,6 @@ config_version=5
 
 config/name="Stranded(1)"
 config/features=PackedStringArray("4.3", "GL Compatibility")
-config/icon="res://assets/icon.svg"
 
 [display]
 

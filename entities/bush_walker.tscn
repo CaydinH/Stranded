@@ -1,10 +1,48 @@
 [gd_scene load_steps=5 format=3 uid="uid://dy5chakfijrva"]
 
-[ext_resource type="Script" path="res://entities/bush_walker.gd" id="1_yhpq1"]
-[ext_resource type="Texture2D" uid="uid://swu4sc6jdoxt" path="res://icon.svg" id="2_hby0x"]
+[ext_resource type="Texture2D" uid="uid://swu4sc6jdoxt" path="res://assets/icon.svg" id="2_hby0x"]
+
+[sub_resource type="GDScript" id="GDScript_yerwm"]
+script/source = "extends CharacterBody2D
+
+
+const SPEED = 80.0
+var health = 20
+
+func _ready() -> void:
+	velocity.x = SPEED
+
+
+func _physics_process(delta: float) -> void:
+	# Add the gravity.
+	if not is_on_floor():
+		velocity += get_gravity() * delta
+
+	if not $RayCast2D.is_colliding() or not $RayCast2D2.is_colliding():
+		velocity.x *= -1
+		$Timer.stop()
+		$Timer.start()
+	if velocity.x == 0:
+		velocity.x = SPEED
+	move_and_slide()
+	
+	for player in get_tree().get_nodes_in_group(\"player\"):
+		if $Area2D.overlaps_body(player):
+			if player.dmg_lock == 0.0:
+				player.take_damage(10)
+				player.dmg_lock = 0.5
+
+func _on_timer_timeout() -> void:
+	velocity.x *= -1
+
+func take_damage(dmg):
+	health -= dmg
+	if health <= 0:
+		self.queue_free()
+"
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_yyxjs"]
-size = Vector2(12, 12)
+size = Vector2(18, 12)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wjjpn"]
 size = Vector2(14, 14)
@@ -12,7 +50,7 @@ size = Vector2(14, 14)
 [node name="bush_walker" type="CharacterBody2D" groups=["enemy"]]
 collision_layer = 2
 collision_mask = 2
-script = ExtResource("1_yhpq1")
+script = SubResource("GDScript_yerwm")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 scale = Vector2(0.09375, 0.09375)
@@ -34,6 +72,11 @@ autostart = true
 
 [node name="RayCast2D" type="RayCast2D" parent="."]
 position = Vector2(-6, 6)
+scale = Vector2(0.5, 0.5)
+target_position = Vector2(0, 34)
+
+[node name="RayCast2D2" type="RayCast2D" parent="."]
+position = Vector2(6, 6)
 scale = Vector2(0.5, 0.5)
 target_position = Vector2(0, 34)
 

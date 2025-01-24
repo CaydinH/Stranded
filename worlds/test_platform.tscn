@@ -1,7 +1,7 @@
-[gd_scene load_steps=7 format=3 uid="uid://rq4mmtujwigk"]
+[gd_scene load_steps=7 format=3 uid="uid://80wl4f7xxnuk"]
 
-[ext_resource type="PackedScene" uid="uid://c6t86yris71wx" path="res://player.tscn" id="1_cp82r"]
-[ext_resource type="PackedScene" uid="uid://dy5chakfijrva" path="res://bush_walker.tscn" id="2_wv3jt"]
+[ext_resource type="PackedScene" uid="uid://c6t86yris71wx" path="res://entities/player.tscn" id="1_cp82r"]
+[ext_resource type="PackedScene" uid="uid://dy5chakfijrva" path="res://entities/bush_walker.tscn" id="2_wv3jt"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_p48vm"]
 size = Vector2(208, 9)
